@@ -7,7 +7,7 @@ import pandas as pd
 
 # Implement the function process_data which
 # 1) Reads in a corpus
-# #2) Changes everything to lowercase
+# 2) Changes everything to lowercase
 # 3) Returns a list of words.
 
 
@@ -19,8 +19,8 @@ with open('indonesia.txt','r',encoding="utf8") as f:
 
 
 v = set(w) #vocabulary
-print(f"The first 10 words in our dictionary are: \n{w[0:10]}")
-print(f"The dictionary has {len(v)} words ")
+print(f"10 kata pertama dalam kamus adalah : \n{w[0:10]}")
+print(f"Kamus mempunyai {len(v)} kata ")
 
 
 # a get_count function that returns a dictionary of word vs frequency
@@ -34,15 +34,9 @@ def get_count(words):
     return word_count
 
 
-word_count = get_count(w)
-print(f"The dictionary has  {len(word_count)} key values pairs")
-
-
-
-
 # implement get_probs function
 # to calculate the probability that any word will appear if randomly selected from the dictionary
-
+word_count = get_count(w)
 def get_probs(word_count_dict):
     probs = {}
     m = sum(word_count_dict.values())
@@ -51,7 +45,7 @@ def get_probs(word_count_dict):
     return probs
 
 
-# Now we implement 4 edit word functions
+# implement 4 edit word functions
 
 # DeleteLetter:removes a letter from a given word
 def DeleteLetter(word):
@@ -140,8 +134,11 @@ def get_corrections(word, probs, vocab, n=2):
     return best_suggestion
 
 
-my_word = input("Enter any word:")
+my_word = input("Masukkan kata:")
 probs = get_probs(word_count)
-tmp_corrections = get_corrections(my_word, probs, v, 2)
-for i, word_prob in enumerate(tmp_corrections):
-    print(f"word {i}: {word_prob[0]}, probability {word_prob[1]:.6f}")
+if my_word in v:
+    print("Kata telah sesuai dengan kamus")
+else: 
+    tmp_corrections = get_corrections(my_word, probs, v, 2)
+    for i, word_prob in enumerate(tmp_corrections):
+        print(f"Kata ke {i+1}: {word_prob[0]}, memiliki probabilitas sebesar {word_prob[1]:.6f} ")
